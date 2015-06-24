@@ -2,7 +2,6 @@ $(document).ready(function() {
 
   $("#eq").css('cursor', 'pointer');
   $("#eq").click(startQuestions);
-  $("#timestats").hide();
   $("#abox").hide();
   $("#abox").keypress(function (e){
     if (e.which == 13)
@@ -26,12 +25,11 @@ function startQuestions()
 {
   if (ongoingRound)
     return;
-  
+
   solved = 0;
   seconds = 0;
   mili = 0;
   ongoingRound = true;
-  $("#timestats").show();
   $("#abox").show();
   $("#eq").css({"background-color": "#ffffff", "font-size": "80px", "font-family": "\"HelveticaNeue\", \"Helvetica Neue\", Helvetica, Arial, sans-serif"});
   $("#eq").html("");
