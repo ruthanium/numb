@@ -24,6 +24,9 @@ var mili = 0;
 // launches the first question.
 function startQuestions()
 {
+  if (ongoingRound) // prevent restarts while in progress
+    return;
+
   solved = 0;
   seconds = 0;
   mili = 0;
