@@ -5,9 +5,12 @@
 	<meta name="description" content="mental math practice" />
 	<meta name="keywords" content="Ruth Dannenfelser numb math" />
   <meta name="author" name="Ruth Dannenfelser" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Numb</title>
 	<link rel="stylesheet" href="simple.css" type="text/css" />
-	<!-- <link href='http://fonts.googleapis.com/css?family=Chau+Philomene+One' rel='stylesheet' type='text/css'> -->
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
 
 	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script type="text/javascript" src="js/d3.v3.js"></script>
@@ -15,8 +18,44 @@
 </head>
 
 <body>
-  <div id="eq">
-    equation goes here.
-    <div id="abox">answer inpsssut area</div>
+  <div class="container">
+    <div class="row">
+      <div id="eqCover" class="six columns offset-by-three">
+        CLICK TO BEGIN.
+      </div>
+      <div class="six columns offset-by-three">
+        <input id="abox" type="text" class="u-full-width" placeholder="answer here">
+      </div>
+    </div>
+
+    <div class="row">
+      <div id="beq" class="six columns offset-by-three settings">+</div>
+    </div>
+    <div class="row">
+      <div id="timestats" class="six columns offset-by-three">elapsed time.</div>
+    </div>
+
+    <div class="row">
+      <div id="chartholder" class="ten columns offset-by-one">
+        chart will go here
+      </div>
+    </div>
+
+    <div class="row">
+      <div id="bchart" class="ten columns offset-by-one settings">
+        20 50 100 RESET
+      </div>
+    </div>
+
+    <div class="row">
+      <div id="morestats" class="three columns offset-by-one">
+        overall stats go here.
+      </div>
+    </div>
+
+  </div>
+
+  <div id="footer">
+    made by <a href="#">Ruth</a>
   </div>
 </body>
