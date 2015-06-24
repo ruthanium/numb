@@ -73,7 +73,7 @@ function endQuestions()
 {
   //console.log("time up");
   $("#abox").hide();
-  $("#eq").css({"background-color": "#ebebeb", "font-size": "80px"});
+  $("#eq").css({"font-size": "80px"});
   $("#eq").html(solved + " <span class=\"solved\">solved</span>");
   $("#timestats").html("click the box to start again.");
   ongoingRound = false;
@@ -107,7 +107,7 @@ function readCookie()
   var best = getCookie("best");
   if (best == "")
     best = "0";
-  $("#morestats").html("<p> High Score </p><p class=\"high\">" + best + "</p>");
+  $("#morestats").html("<p style=\"margin-bottom:10px;\"> Personal Best </p><p class=\"high\">" + best + "</p>");
 }
 
 // http://www.w3schools.com/js/js_cookies.asp

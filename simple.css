@@ -123,12 +123,15 @@ img
 {
 	height:100px;
 	padding:3px;
+	padding-top:20px;
 	margin-top:50px;
 	margin-bottom:10px;
-	border-bottom: 1px solid #ccc;
+	/*border-bottom: 1px solid #ccc;
 	border-top: 1px solid #ccc;
 	border-right:1px solid #ccc;
-	border-left:1px solid #ccc;
+	border-left:1px solid #ccc;*/
+	color:white;
+	background-color:#575757;
 	font-size:12px;
 	text-align:center;
 }
