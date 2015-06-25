@@ -164,8 +164,12 @@ function endQuestions()
 {
   //console.log("time up");
   $("#abox").hide();
-  $("#eq").css({"font-size": "80px"});
-  $("#eq").html(solved + " <span class=\"solved\">solved</span>");
+  //$("#eq").css({"font-size": "80px"});
+  var acc = 0;
+  if (solved + incorrect != 0)
+    acc = (solved)/(solved+incorrect);
+  $("#eq").html('<div id="uppereq" class="six columns offset-by-three">'+solved+'</div><div id="lowereq" class="six columns offset-by-three">solved<p class="reduced">accuracy: '+acc+'</p></div>');
+  //$("#eq").html(solved + " <span class=\"solved\">solved</span>");
   $("#timestats").html("click the box to start again.");
   ongoingRound = false;
 

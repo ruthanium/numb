@@ -72,17 +72,36 @@ img
 #eq
 {
 	height:175px;
+	line-height:175px;
 	/*background-color:#ebebeb;*/
 	font-family: 'Raleway', sans-serif;
 	font-weight:bold;
 	text-align:center;
-	line-height:175px;
 	border-bottom: 1px solid #ccc;
 	border-top: 1px solid #ccc;
 	border-right:1px solid #ccc;
 	border-left:1px solid #ccc;
 	margin-top:50px;
 }
+
+#uppereq
+{
+	height:100px;
+	line-height:100px;
+	font-size:80px;
+}
+#lowereq
+{
+	height:75px;
+	line-height:25px;
+	font-size:20px;
+}
+.reduced
+{
+	font-size:14px;
+	font-weight:normal;
+}
+
 #abox
 {
 	height:25px;
