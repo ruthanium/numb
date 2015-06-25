@@ -1,7 +1,19 @@
 $(document).ready(function() {
-
+  $("#settings").hide();
   $("#eq").css('cursor', 'pointer');
+  $("#beq").css('cursor', 'pointer');
   $("#eq").click(startQuestions);
+  $("#beq").click(function() {
+    if (ongoingRound)
+    {
+      $("#settings").hide();
+      return;
+    }
+
+    $("#settings").toggle();
+  });
+  $("#minbox").change(setRange);
+  $("#maxbox").change(setRange);
   $("#abox").hide();
   $("#abox").keypress(function (e){
     if (e.which == 13)
@@ -11,15 +23,24 @@ $(document).ready(function() {
   });
   readCookie();
 
+  $(".but").click(handleButtonPress);
+
 });
+
 var min = 2;
 var max = 9;
 var solved = 0;
 var op1 = 0;
 var op2 = 0;
+var operator = "*";
 var ongoingRound = false;
 var seconds = 0;
 var mili = 0;
+var multb = true;
+var addb = false;
+var subb = false;
+var divb = false;
+var incorrect = 0;
 
 // launches the first question.
 function startQuestions()
@@ -27,11 +48,29 @@ function startQuestions()
   if (ongoingRound)
     return;
 
+  // ensure that the parameters for a run are valid.
+  if (!addb && !subb && !multb && !divb)
+  {
+    alert("At least one operator must be selected!");
+    return;
+  }
+  if(min >= max || (min + 2) >= max)
+  {
+    alert("The min and max number are invalid. They have been reset to the default.");
+    min = 2;
+    $("#minbox").val(2);
+    max = 9;
+    $("#maxbox").val(9);
+    return;
+  }
+
   solved = 0;
+  incorrect = 0;
   seconds = 0;
   mili = 0;
   ongoingRound = true;
   $("#abox").show();
+  $("#settings").hide();
   $("#abox").val("");
   $("#eq").css({"background-color": "#ffffff", "font-size": "80px", "font-family": "\"HelveticaNeue\", \"Helvetica Neue\", Helvetica, Arial, sans-serif"});
   $("#eq").html("");
@@ -46,26 +85,78 @@ function getQuestion()
   //console.log("get question.")
   op1 = getRanInt(min, max);
   op2 = getRanInt(min, max);
-  $("#eq").html(op1 + " <span class=\"operator\">x</span> " + op2);
+
+  var op_choices = [];
+  if (addb)
+    op_choices.push("+");
+  if (subb)
+    op_choices.push("-");
+  if (multb)
+    op_choices.push("x");
+  if (divb)
+    op_choices.push("/");
+  op = getRanInt(1,op_choices.length);
+  operator = op_choices[op-1];
+
+  $("#eq").html(op1 + " <span class=\"operator\">" + op_choices[op-1] + "</span> " + op2);
 }
 
 
 function checkAnswer(a)
 {
   //console.log("check answer.");
-  if (op1 * op2 == a)
+  ans = 0;
+  if (operator == "x")
+    ans = op1 * op2;
+  if (operator == "+")
+    ans = op1 + op2;
+  if (operator == "-")
+    ans = op1 - op2;
+  if (operator == "/")
+    ans = op1 / op2;
+
+  if (ans == a)
   {
     getQuestion();
     $("#abox").val("");
     solved += 1;
   }
+  else
+    incorrect += 1;
 }
 
-// http://stackoverflow.com/questions/4959975/
-// generate-random-value-between-two-numbers-in-javascript
-function getRanInt(a,b)
+
+function handleButtonPress()
 {
-    return Math.floor(Math.random()*(b-a+1)+a);
+  if (ongoingRound)
+  {
+    $("#settings").hide();
+    return;
+  }
+
+  $(this).toggleClass("button-primary");
+  var id = $(this).attr('id');
+
+  if (id == "subb")
+    subb = !subb;
+  if (id == "addb")
+    addb = !addb;
+  if (id == "multb")
+    multb = !multb;
+  if (id == "divb")
+    divb = !divb;
+}
+
+function setRange()
+{
+  if (ongoingRound)
+  {
+    $("#settings").hide();
+    return;
+  }
+  min = parseInt($("#minbox").val());
+  max = parseInt($("#maxbox").val());
+
 }
 
 // display # solved in 30 seconds
@@ -120,4 +211,10 @@ function getCookie(cname) {
         if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
     }
     return "";
+}
+// http://stackoverflow.com/questions/4959975/
+// generate-random-value-between-two-numbers-in-javascript
+function getRanInt(a,b)
+{
+    return Math.floor(Math.random()*(b-a+1)+a);
 }
