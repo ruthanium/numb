@@ -70,7 +70,7 @@
 
   <script type="text/javascript">
     // D3 chart
-    var data = [{attempt: 1, val:10 }, {attempt: 2, val:10 }, {attempt: 3, val:0 }, {attempt: 4, val:7 }, {attempt: 5, val:5 }];
+    var data = getLatestScores();
 
     var margin = {top: 20, right: 20, bottom: 50, left: 30},
         width = $("#chartholder").width() - margin.left - margin.right,
@@ -94,7 +94,7 @@
         .orient("left");
 
     var line = d3.svg.line()
-        .x(function(d) { return x(d.attempt); })
+        .x(function(d, i) { return x(i + 1); })
         .y(function(d) { return y(d.val); });
 
     var svg = d3.select("#chartholder").append("svg")
@@ -125,9 +125,13 @@
         .style("text-anchor", "end")
         .text("score");
 
-    svg.append("path") // draw the line.
+    var allscores = svg.append("path") // draw the line.
         .datum(data)
         .attr("class", "line")
         .attr("d", line);
+
+    var transition = d3.select({}).transition()
+        .duration(750)
+        .ease("linear");
     </script>
 </body>

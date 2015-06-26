@@ -41,6 +41,7 @@ var addb = false;
 var subb = false;
 var divb = false;
 var incorrect = 0;
+var chartMax = 50;
 
 // launches the first question.
 function startQuestions()
@@ -176,12 +177,27 @@ function endQuestions()
   $("#timestats").html("click the box to start again.");
   ongoingRound = false;
 
+  // update high score and past score cookie information as needed
   var b = getCookie("best");
   if (b == "" || b.toString() < solved)
   {
     document.cookie="best="+solved;
     readCookie();
   }
+
+  var b = getCookie("pastScores");
+  var arr = [];
+  if (b != "")
+  {
+    arr = JSON.parse(b);
+  }
+  if (arr.length == chartMax)
+    arr.shift();
+  arr.push(solved);
+  document.cookie="pastScores="+JSON.stringify(arr);
+
+  // update chart
+  tick({val:solved});
 }
 
 function displayElapsed()
@@ -210,11 +226,44 @@ function readCookie()
 
 function getLatestScores()
 {
-    console.log("get latest scores");
-    var pastScores = Array.apply(null, Array(50)).map(Number.prototype.valueOf,10);
-    console.log(getCookie("pastScores"));
+    b = getCookie("pastScores");
+    var arr = []
+    if (b != "")
+      arr = JSON.parse(b);
+
+    var pastScores = [];
+    for (var i = 0; i < arr.length; i++)
+    {
+      pastScores.push({val: arr[i]});
+    }
 
     return pastScores;
+}
+
+// update function for the line chart
+function tick(latest)
+{
+    console.log("tick");
+    console.log(latest);
+    //console.log("SENT: " + sentcount + " DROPPED: " + droppedcount);
+
+    // add the latest data point
+    data.push(latest);
+
+    // redraw the line
+    svg.selectAll(".line")
+        .attr("d", line)
+        .attr("transform", null);
+
+
+    // slide the line left
+    if (data.length > chartMax)
+    {
+      // pop the old data point off the front
+      data.shift();
+      //allscores.transition().attr("transform", "translate(" + x(data.attempt) + ")");
+      allscores.transition().attr("d", line);
+    }
 }
 
 // http://www.w3schools.com/js/js_cookies.asp, can replace with JSON.stringify probably
