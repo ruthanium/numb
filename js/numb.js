@@ -167,7 +167,10 @@ function endQuestions()
   //$("#eq").css({"font-size": "80px"});
   var acc = 0;
   if (solved + incorrect != 0)
+  {
     acc = (solved)/(solved+incorrect);
+    acc = acc.toPrecision(2);
+  }
   $("#eq").html('<div id="uppereq" class="six columns offset-by-three">'+solved+'</div><div id="lowereq" class="six columns offset-by-three">solved<p class="reduced">accuracy: '+acc+'</p></div>');
   //$("#eq").html(solved + " <span class=\"solved\">solved</span>");
   $("#timestats").html("click the box to start again.");
@@ -205,7 +208,16 @@ function readCookie()
   $("#morestats").html("<p style=\"margin-bottom:10px;\"> Personal Best </p><p class=\"high\">" + best + "</p>");
 }
 
-// http://www.w3schools.com/js/js_cookies.asp
+function getLatestScores()
+{
+    console.log("get latest scores");
+    var pastScores = Array.apply(null, Array(50)).map(Number.prototype.valueOf,10);
+    console.log(getCookie("pastScores"));
+
+    return pastScores;
+}
+
+// http://www.w3schools.com/js/js_cookies.asp, can replace with JSON.stringify probably
 function getCookie(cname) {
     var name = cname + "=";
     var ca = document.cookie.split(';');
